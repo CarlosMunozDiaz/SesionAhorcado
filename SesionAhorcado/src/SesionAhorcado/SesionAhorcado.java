@@ -27,6 +27,8 @@ public class SesionAhorcado extends HttpServlet {
 	
 	String imagen = "";
 	
+	String frase = "";
+	
 	int numeroIntentos = 0;
 	int numeroRestantes = 6;
        
@@ -51,6 +53,8 @@ public class SesionAhorcado extends HttpServlet {
 		if(laSesion != null) {
 			if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
 				laSesion.invalidate();  // se inactiva la sesión
+			} else {
+				
 			}
 		}
 		
@@ -67,12 +71,41 @@ public class SesionAhorcado extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		letra = request.getParameter("caracter");
+		
+		letra = letra.toLowerCase();
+		
+		boolean esCaracter = Character.isLetter(letra.charAt(0));
+		
 		// se recupera la sesión
 		HttpSession laSesion= request.getSession(false);  //carga la sessión si existe, devuelve null si no
 		
 		if(laSesion != null) {
 			
+			if(letra.length() == 1 && esCaracter == true) {
+			
+			//Aquí debemos incluir si la letra ya está en la lista --> Crear un método
+			} else if (letra.length() != 1){
+				frase = "No has indicado una única letra";
+			} else if (esCaracter == false) {
+				frase = "El carácter utilizado no es una letra";
+			} else {
+				frase = "La letra indicada ya ha sido utilizada de forma previa";
+			}
+			
+			//Se enruta a la vista --> la ruta debe comenzar por /
+			String vista = "/sesionahorcado.jsp";  
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vista);
+			dispatcher.forward(request,response);
+		
+		
 		}
+		
+		
+		
+		
+		
+		
 		
 		
 		

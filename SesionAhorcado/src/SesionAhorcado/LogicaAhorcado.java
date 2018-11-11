@@ -1,6 +1,7 @@
 package SesionAhorcado;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 public class LogicaAhorcado {
@@ -16,6 +17,31 @@ public class LogicaAhorcado {
 		return palabra;
 		
 	}
+	
+	public static String palabraNormalizada (String palabra) {
+		
+		String palabraNormalizada = palabra.toLowerCase();
+		
+		palabraNormalizada = palabraNormalizada.replace('ñ', '\001');
+		palabraNormalizada = Normalizer.normalize(palabraNormalizada, Normalizer.Form.NFD);
+		palabraNormalizada = palabraNormalizada.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+		palabraNormalizada = palabraNormalizada.replace('\001', 'ñ');
+	 		
+		return palabraNormalizada;
+		
+	}
+	
+	public static ArrayList<String> generarLista(String letra){
+		
+		ArrayList<String> listaLetras = new ArrayList<String>();
+		
+		//Aquí no hacemos chequeo: ya se realiza en el doPost del Servlet
+		listaLetras.add(letra);
+	
+		return listaLetras;
+		
+	}
+	
 	
 	public static String generaImagen(int numeroRestantes) {
 		
@@ -38,19 +64,6 @@ public class LogicaAhorcado {
 		}		
 		
 		return imagen;
-		
-	}
-	
-	public static String palabraNormalizada (String palabra) {
-		
-		String palabraNormalizada = palabra.toLowerCase();
-		
-		palabraNormalizada = palabraNormalizada.replace('ñ', '\001');
-		palabraNormalizada = Normalizer.normalize(palabraNormalizada, Normalizer.Form.NFD);
-		palabraNormalizada = palabraNormalizada.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-		palabraNormalizada = palabraNormalizada.replace('\001', 'ñ');
-	 		
-		return palabraNormalizada;
 		
 	}
 
