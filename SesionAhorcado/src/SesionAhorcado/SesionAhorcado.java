@@ -72,7 +72,6 @@ public class SesionAhorcado extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		letra = request.getParameter("caracter");
-		
 		letra = letra.toLowerCase();
 		
 		boolean esCaracter = Character.isLetter(letra.charAt(0));
@@ -83,6 +82,9 @@ public class SesionAhorcado extends HttpServlet {
 		if(laSesion != null) {
 			
 			if(letra.length() == 1 && esCaracter == true) {
+				
+				//Aquí va el grueso --> Todo lo respectivo a la session
+				
 			
 			//Aquí debemos incluir si la letra ya está en la lista --> Crear un método
 			} else if (letra.length() != 1){
@@ -92,6 +94,9 @@ public class SesionAhorcado extends HttpServlet {
 			} else {
 				frase = "La letra indicada ya ha sido utilizada de forma previa";
 			}
+			
+			
+			//Aquí introducimos todos los setAttributes a excepción de la frase
 			
 			//Se enruta a la vista --> la ruta debe comenzar por /
 			String vista = "/sesionahorcado.jsp";  

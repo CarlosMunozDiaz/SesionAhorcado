@@ -23,10 +23,10 @@
 	<input type="text" name="caracter">
 	<button type="submit">Enviar letra</button>
 	</form>
-	<div>
+	<div id="informacion">
 	
 	</div>
-	<div>
+	<div id="boton">
 		<a href="SesionAhorcado.java?empezar">Volver a jugar</a>
 	</div>
 
