@@ -1,6 +1,7 @@
 package SesionAhorcado;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +24,8 @@ public class SesionAhorcado extends HttpServlet {
 	String letra = "";
 	String palabra = "";
 	String palabraNormalizada = "";
+	
+	ArrayList<String> listaLetras = new ArrayList<String>();
 	
 	String[] palabraGuiones;
 	
@@ -53,8 +56,9 @@ public class SesionAhorcado extends HttpServlet {
 		
 		palabra = LogicaAhorcado.generaPalabra(mapaPalabras);
 		palabraNormalizada = LogicaAhorcado.palabraNormalizada(palabra);
+		listaLetras = LogicaAhorcado.generarLista(letra);
 		
-		imagen = 
+		imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 		
 		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
 		
@@ -62,6 +66,12 @@ public class SesionAhorcado extends HttpServlet {
 			if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
 				laSesion.invalidate();  // se inactiva la sesión
 			} else {
+				
+				request.setAttribute("letra", letra);
+				request.setAttribute("palabra", palabra);
+				request.setAttribute("palabraGuiones", palabraGuiones);
+				request.setAttribute("imagen", imagen);
+				request.setAttribute("listaLetras", listaLetras);
 				
 			}
 		}
