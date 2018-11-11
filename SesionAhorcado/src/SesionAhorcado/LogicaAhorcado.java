@@ -42,7 +42,55 @@ public class LogicaAhorcado {
 		
 	}
 	
+	public static String[] generarPalabraOculta(String palabra, String palabraNormalizada, ArrayList<String> listaLetras) {
+		
+		String[] palabraGuiones = new String[palabraNormalizada.length()];
+		
+		for(int i = 0; i < palabraNormalizada.length(); i++) {
+			
+			palabraGuiones[i] = palabraNormalizada.substring(i, i+1);			
+			
+			for(int j = 0; j < listaLetras.size(); j++) {
+				
+				if(listaLetras.get(j).equals(palabraGuiones[i])) {
+					
+					palabraGuiones[i] = palabra.substring(i) + " ";				
+					
+				} else {
+					
+					palabraGuiones[i] = "_ ";
+					
+				}
+				
+			}
+			
+		}
+		
+		return palabraGuiones;
+		
+	}
 	
+	public static int generaNumeroErrores(String letra, String palabraNormalizada, int numeroErrores) {
+		
+		boolean estaLetra = false;
+		
+		for (int i = 0; i < palabraNormalizada.length(); i++) {
+			
+			if(letra.equals(palabraNormalizada.substring(i))) {
+				estaLetra = true;
+				break;
+			}
+					
+		}
+		
+		if(estaLetra == false) {
+			numeroErrores++;
+		}		
+		
+		return numeroErrores;
+		
+	}
+		
 	public static String generaImagen(int numeroRestantes) {
 		
 		String imagen = "";

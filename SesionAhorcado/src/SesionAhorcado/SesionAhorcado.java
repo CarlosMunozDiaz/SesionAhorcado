@@ -23,7 +23,8 @@ public class SesionAhorcado extends HttpServlet {
 	String letra = "";
 	String palabra = "";
 	String palabraNormalizada = "";
-	String palabraGuiones = "";
+	
+	String[] palabraGuiones;
 	
 	String imagen = "";
 	
@@ -49,6 +50,13 @@ public class SesionAhorcado extends HttpServlet {
 		
 		//Se crea la sesión
 		HttpSession laSesion= request.getSession(true);
+		
+		palabra = LogicaAhorcado.generaPalabra(mapaPalabras);
+		palabraNormalizada = LogicaAhorcado.palabraNormalizada(palabra);
+		
+		imagen = 
+		
+		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
 		
 		if(laSesion != null) {
 			if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
