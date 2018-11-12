@@ -10,7 +10,7 @@ public class LogicaAhorcado {
 		
 		String palabra = "";
 		
-		int numeroPalabra = (int) (Math.random()*mapaPalabras.size());
+		int numeroPalabra = (int) (Math.random()*mapaPalabras.size()+1);
 		
 		palabra = mapaPalabras.get("nombre"+numeroPalabra);
 		
@@ -31,12 +31,13 @@ public class LogicaAhorcado {
 		
 	}
 	
-	public static ArrayList<String> generarLista(String letra){
+	public static ArrayList<String> generarLista(String letra, int numeroIntentos){
 		
 		ArrayList<String> listaLetras = new ArrayList<String>();
 		
 		//Aquí no hacemos chequeo: ya se realiza en el doPost del Servlet
 		listaLetras.add(letra);
+		numeroIntentos++;
 	
 		return listaLetras;
 		
@@ -114,5 +115,9 @@ public class LogicaAhorcado {
 		return imagen;
 		
 	}
+	
+	//Incluir si la letra ya ha sido utilizada
+	
+	//Incluir si se ha ganado el juego
 
 }

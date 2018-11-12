@@ -4,16 +4,29 @@
 	text-align: center;
 }
 
+#informacion {
+	
+	border: 2px solid black;
+	background-color: green;
+	width: 50%;
+	margin: 20px auto;
+	
+}
+
 #boton {
 	
-	border: 15px solid;
-	margin: 0 auto;
+	margin: 20px auto;
+	border: 2px solid grey;
+	background-color: red;
+	padding: 15px;
+	width: 25%;
 	
 }
 
 #boton a {
 	
-	margin: 20px;
-	padding: 100px;
+	padding: 15px;
+	text-decoration: none;
+	color: white;
 	
 }
