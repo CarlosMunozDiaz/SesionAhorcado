@@ -36,7 +36,9 @@ public class SesionAhorcado extends HttpServlet {
 	int numeroIntentos = 0;
 	int numeroRestantes = 6;
 	
-	boolean encontrada = false;
+	boolean encontradaLetra = false;
+	
+	int encontradaPalabra = 1;
        
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,6 +53,7 @@ public class SesionAhorcado extends HttpServlet {
 			put("nombre6","Valladolid");
 			put("nombre7","Granada");
 			put("nombre8","Suances");
+			put("nombre9","España");
 		}};
 		
 		//Se crea la sesión
@@ -58,18 +61,22 @@ public class SesionAhorcado extends HttpServlet {
 		
 		palabra = LogicaAhorcado.generaPalabra(mapaPalabras);
 		palabraNormalizada = LogicaAhorcado.palabraNormalizada(palabra);
-		listaLetras = LogicaAhorcado.generarLista(letra, listaLetras);
 		
-		//numeroIntentos = LogicaAhorcado.generarIntentos(letra, numeroIntentos);
-		//numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
+		listaLetras = LogicaAhorcado.generarLista(letra, listaLetras);
 		
 		imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 		
 		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
 		
-			if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
-				laSesion.invalidate();  // se inactiva la sesión
-			}
+		if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
+			letra = "";
+			listaLetras.clear();
+			numeroIntentos = 0;
+			numeroRestantes = 6;
+			encontradaLetra = false;
+			encontradaPalabra = 1;
+			laSesion.invalidate();  // se inactiva la sesión			
+		}
 				
 				/*if (laSesion.getAttribute("letra") != null) {
 					letra = (String) laSesion.getAttribute("letra");
@@ -101,6 +108,8 @@ public class SesionAhorcado extends HttpServlet {
 			request.setAttribute("numeroIntentos", numeroIntentos);
 			request.setAttribute("numeroRestantes", numeroRestantes);
 			
+			request.setAttribute("encontradaPalabra", encontradaPalabra);
+			
 			//Se enruta a la vista --> la ruta debe comenzar por /
 			String vista = "/sesionahorcado.jsp";  
 			RequestDispatcher view = request.getRequestDispatcher(vista);
@@ -108,7 +117,6 @@ public class SesionAhorcado extends HttpServlet {
 				
 		}
 			
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -124,7 +132,7 @@ public class SesionAhorcado extends HttpServlet {
 		
 		if(laSesion != null) {
 			
-			encontrada = LogicaAhorcado.letraUtilizada(letra, listaLetras);
+			encontradaLetra = LogicaAhorcado.letraUtilizada(letra, listaLetras);
 			
 			laSesion.setAttribute("letra", letra);
 			laSesion.setAttribute("listaLetras", listaLetras);
@@ -135,6 +143,7 @@ public class SesionAhorcado extends HttpServlet {
 			laSesion.setAttribute("imagen", imagen);
 			laSesion.setAttribute("numeroIntentos", numeroIntentos);
 			laSesion.setAttribute("numeroRestantes", numeroRestantes);
+			laSesion.setAttribute("encontradaPalabra", encontradaPalabra);
 									
 			if (laSesion.getAttribute("letra") != null) {
 				letra = (String) laSesion.getAttribute("letra");
@@ -154,11 +163,13 @@ public class SesionAhorcado extends HttpServlet {
 				numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
 			} else if (laSesion.getAttribute("frase") != null) {
 				frase = (String) request.getAttribute("frase");
-			}			
+			} else if (laSesion.getAttribute("encontradaPalabra") != null) {
+				encontradaPalabra = (Integer) request.getAttribute("encontradaPalabra");
+			}
 			
 			if(letra.length() == 1 && esCaracter == true) {				
 				
-				if (encontrada == true) {
+				if (encontradaLetra == true) {
 					
 					frase = "La letra indicada ya ha sido utilizada de forma previa";
 					request.setAttribute("frase", frase);
@@ -173,8 +184,16 @@ public class SesionAhorcado extends HttpServlet {
 					numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
 					
 					imagen = LogicaAhorcado.generaImagen(numeroRestantes);
-					
+										
 					palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
+					
+					encontradaPalabra = LogicaAhorcado.comprobarGuiones(palabraGuiones);
+					
+					for(int i = 0; i < palabraGuiones.length; i++)
+					{
+						System.out.print(palabraGuiones[i]);
+					}
+					System.out.println(encontradaPalabra);
 					
 					frase = "";
 					request.setAttribute("frase", "");
@@ -182,16 +201,19 @@ public class SesionAhorcado extends HttpServlet {
 				}
 				
 			} else if (letra.length() != 1){
+				
 				frase = "No has indicado una única letra";
 				request.setAttribute("frase", frase);
 				request.setAttribute("letra", "");
+				
 			} else if (esCaracter == false) {
+				
 				frase = "El carácter utilizado no es una letra";
 				request.setAttribute("frase", frase);
 				request.setAttribute("letra", "");
+				
 			} 
 			
-						
 			//Aquí introducimos todos los setAttributes a excepción de la frase
 			request.setAttribute("palabra", palabra);
 			request.setAttribute("palabraNormalizada", palabraNormalizada);
@@ -200,6 +222,7 @@ public class SesionAhorcado extends HttpServlet {
 			request.setAttribute("imagen", imagen);
 			request.setAttribute("numeroIntentos", numeroIntentos);
 			request.setAttribute("numeroRestantes", numeroRestantes);
+			request.setAttribute("encontradaPalabra", encontradaPalabra);
 			
 			//Se enruta a la vista --> la ruta debe comenzar por /
 			String vista = "/sesionahorcado.jsp";  

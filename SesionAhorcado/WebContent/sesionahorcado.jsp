@@ -11,7 +11,8 @@
 	Integer numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
 	
 	String frase = (String) request.getAttribute("frase");
-
+	
+	Integer encontradaPalabra = (Integer) request.getAttribute("encontradaPalabra");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,9 +22,16 @@
 <link href="Estilos/estilosAhorcado.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<%if (numeroRestantes == 0){ %>
+		<img src="<%=imagen%>">
+		<h3 class="rojoTitulo">¡Has perdido! Vuelve a intentarlo</h3>
+	<%} else if (encontradaPalabra == 0) {%>
+		<img src="<%=imagen%>">
+		<h3>¡Has ganado! Vuelve a intentarlo</h3>
+	<%} else {%>
 	<h1>Juego del Ahorcado</h1>
-	<h2>La letra seleccionado es: <%=letra%></h2>
-	<h3 id="rojo"><%=frase%></h3>
+	<h2>La letra seleccionada es: <%=letra%></h2>
+	<h3 class="rojoTitulo"><%=frase%></h3>
 	<img src="<%=imagen%>">
 	<h2>La palabra sería: <%=palabra%></h2>
 	<h2>La palabra en guiones:
@@ -46,6 +54,7 @@
 		<h3>Número de intentos: <%=numeroIntentos%></h3>
 		<h3>Número de intentos restantes: <%=numeroRestantes%></h3>
 	</div>
+	<%} %>
 	<div id="boton">
 		<a href="SesionAhorcado?empezar">Volver a jugar</a>
 	</div>

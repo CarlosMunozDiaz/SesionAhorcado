@@ -52,13 +52,13 @@ public class LogicaAhorcado {
 			
 			for(int j = 0; j < listaLetras.size(); j++) {
 				
-				if(listaLetras.get(j).equals(palabraGuiones[i])) {
+				if(palabraGuiones[i].equals(listaLetras.get(j)) ) {
 					
-					palabraGuiones[i] = palabra.substring(i, i+1) + " ";				
+					palabraGuiones[i] = palabra.charAt(i) + " ";		
 					
 				} else {
 					
-					palabraGuiones[i] = "_ ";
+					palabraGuiones[i] = "x ";
 					
 				}
 				
@@ -67,6 +67,22 @@ public class LogicaAhorcado {
 		}
 		
 		return palabraGuiones;
+		
+	}
+	
+	public static int comprobarGuiones (String[] palabraGuiones) {
+		
+		int contador = 0;
+		
+		for(int i = 0; i < palabraGuiones.length; i++) {
+			
+			if(palabraGuiones[i].equals("_ ")) {
+				contador = 1;
+			}
+			
+		}		
+		
+		return contador;
 		
 	}
 	
@@ -115,7 +131,6 @@ public class LogicaAhorcado {
 		
 	}
 	
-	//Incluir si la letra ya ha sido utilizada
 	public static boolean letraUtilizada(String letra, ArrayList<String> listaLetras) {
 		
 		boolean encontrada = false;
