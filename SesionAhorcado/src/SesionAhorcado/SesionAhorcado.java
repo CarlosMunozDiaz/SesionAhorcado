@@ -118,7 +118,7 @@ public class SesionAhorcado extends HttpServlet {
 			
 			encontradaLetra = LogicaAhorcado.letraUtilizada(letra, listaLetras);
 			
-			laSesion.setAttribute("letra", letra);
+			/*laSesion.setAttribute("letra", letra);
 			laSesion.setAttribute("listaLetras", listaLetras);
 			laSesion.setAttribute("frase", frase);
 			laSesion.setAttribute("palabra", palabra);
@@ -127,7 +127,7 @@ public class SesionAhorcado extends HttpServlet {
 			laSesion.setAttribute("imagen", imagen);
 			laSesion.setAttribute("numeroIntentos", numeroIntentos);
 			laSesion.setAttribute("numeroRestantes", numeroRestantes);
-			laSesion.setAttribute("encontradaPalabra", encontradaPalabra);
+			laSesion.setAttribute("encontradaPalabra", encontradaPalabra);*/
 												
 			if (laSesion.getAttribute("letra") != null) {
 				letra = (String) laSesion.getAttribute("letra");
