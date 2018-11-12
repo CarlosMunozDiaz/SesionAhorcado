@@ -9,6 +9,8 @@
 	
 	Integer numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
 	Integer numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
+	
+	String frase = (String) request.getAttribute("frase");
 
 %>
 <!DOCTYPE html>
@@ -21,6 +23,7 @@
 <body>
 	<h1>Juego del Ahorcado</h1>
 	<h2>La letra seleccionado es: <%=letra%></h2>
+	<h3 id="rojo"><%=frase%></h3>
 	<img src="<%=imagen%>">
 	<h2>La palabra sería: <%=palabra%></h2>
 	<h2>La palabra en guiones:
@@ -44,7 +47,7 @@
 		<h3>Número de intentos restantes: <%=numeroRestantes%></h3>
 	</div>
 	<div id="boton">
-		<a href="SesionAhorcado.java?empezar">Volver a jugar</a>
+		<a href="SesionAhorcado?empezar">Volver a jugar</a>
 	</div>
 </body>
 </html>

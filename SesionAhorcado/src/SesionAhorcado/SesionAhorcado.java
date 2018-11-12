@@ -35,6 +35,8 @@ public class SesionAhorcado extends HttpServlet {
 	
 	int numeroIntentos = 0;
 	int numeroRestantes = 6;
+	
+	boolean encontrada = false;
        
     /**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,22 +58,20 @@ public class SesionAhorcado extends HttpServlet {
 		
 		palabra = LogicaAhorcado.generaPalabra(mapaPalabras);
 		palabraNormalizada = LogicaAhorcado.palabraNormalizada(palabra);
-		listaLetras = LogicaAhorcado.generarLista(letra, numeroIntentos);
+		listaLetras = LogicaAhorcado.generarLista(letra, listaLetras);
 		
+		//numeroIntentos = LogicaAhorcado.generarIntentos(letra, numeroIntentos);
 		//numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
 		
 		imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 		
 		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
 		
-		
-			
-			
 			if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
 				laSesion.invalidate();  // se inactiva la sesión
-			} else {
+			}
 				
-				if (laSesion.getAttribute("letra") != null) {
+				/*if (laSesion.getAttribute("letra") != null) {
 					letra = (String) laSesion.getAttribute("letra");
 				} else if (laSesion.getAttribute("palabra") != null) {
 					palabra = (String) laSesion.getAttribute("palabra");
@@ -89,10 +89,8 @@ public class SesionAhorcado extends HttpServlet {
 					numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
 				} else if (laSesion.getAttribute("frase") != null) {
 					frase = (String) request.getAttribute("frase");
-				}
+				}*/
 							
-			}
-			
 			request.setAttribute("letra", letra);
 			request.setAttribute("listaLetras", listaLetras);
 			request.setAttribute("frase", "");
@@ -126,6 +124,8 @@ public class SesionAhorcado extends HttpServlet {
 		
 		if(laSesion != null) {
 			
+			encontrada = LogicaAhorcado.letraUtilizada(letra, listaLetras);
+			
 			laSesion.setAttribute("letra", letra);
 			laSesion.setAttribute("listaLetras", listaLetras);
 			laSesion.setAttribute("frase", frase);
@@ -135,58 +135,63 @@ public class SesionAhorcado extends HttpServlet {
 			laSesion.setAttribute("imagen", imagen);
 			laSesion.setAttribute("numeroIntentos", numeroIntentos);
 			laSesion.setAttribute("numeroRestantes", numeroRestantes);
+									
+			if (laSesion.getAttribute("letra") != null) {
+				letra = (String) laSesion.getAttribute("letra");
+			} else if (laSesion.getAttribute("palabra") != null) {
+				palabra = (String) laSesion.getAttribute("palabra");
+			} else if (laSesion.getAttribute("palabraNormalizada") != null) {
+				palabraNormalizada = (String) laSesion.getAttribute("palabraNormalizada");
+			} else if (laSesion.getAttribute("palabraGuiones") != null) {
+				palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
+			} else if (laSesion.getAttribute("imagen") != null) {
+				imagen = (String) request.getAttribute("imagen");
+			} else if (laSesion.getAttribute("listaLetras") != null) {
+				listaLetras = (ArrayList<String>) request.getAttribute("listaLetras");
+			} else if (laSesion.getAttribute("numeroIntentos") != null) {
+				numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
+			} else if (laSesion.getAttribute("numeroRestantes") != null) {
+				numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
+			} else if (laSesion.getAttribute("frase") != null) {
+				frase = (String) request.getAttribute("frase");
+			}			
 			
-			if(letra.length() == 1 && esCaracter == true) {
+			if(letra.length() == 1 && esCaracter == true) {				
 				
-				listaLetras = LogicaAhorcado.generarLista(letra, numeroIntentos);
-				
-				numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
-				
-				imagen = LogicaAhorcado.generaImagen(numeroRestantes);
-				
-				palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
-				
-				if (laSesion.getAttribute("letra") != null) {
-					letra = (String) laSesion.getAttribute("letra");
-				} else if (laSesion.getAttribute("palabra") != null) {
-					palabra = (String) laSesion.getAttribute("palabra");
-				} else if (laSesion.getAttribute("palabraNormalizada") != null) {
-					palabraNormalizada = (String) laSesion.getAttribute("palabraNormalizada");
-				} else if (laSesion.getAttribute("palabraGuiones") != null) {
-					palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
-				} else if (laSesion.getAttribute("imagen") != null) {
-					imagen = (String) request.getAttribute("imagen");
-				} else if (laSesion.getAttribute("listaLetras") != null) {
-					listaLetras = (ArrayList<String>) request.getAttribute("listaLetras");
-				} else if (laSesion.getAttribute("numeroIntentos") != null) {
-					numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
-				} else if (laSesion.getAttribute("numeroRestantes") != null) {
-					numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
-				} else if (laSesion.getAttribute("frase") != null) {
-					frase = (String) request.getAttribute("frase");
-				}			
-				
-				frase = "";
-				request.setAttribute("frase", "");
-				request.setAttribute("letra", letra);
+				if (encontrada == true) {
 					
-			//Aquí debemos incluir si la letra ya está en la lista --> Crear un método
+					frase = "La letra indicada ya ha sido utilizada de forma previa";
+					request.setAttribute("frase", frase);
+					request.setAttribute("letra", "-");
+					
+				} else {
+					
+					listaLetras = LogicaAhorcado.generarLista(letra, listaLetras);
+					
+					numeroIntentos++;
+					
+					numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
+					
+					imagen = LogicaAhorcado.generaImagen(numeroRestantes);
+					
+					palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
+					
+					frase = "";
+					request.setAttribute("frase", "");
+					request.setAttribute("letra", letra);
+				}
+				
 			} else if (letra.length() != 1){
 				frase = "No has indicado una única letra";
 				request.setAttribute("frase", frase);
 				request.setAttribute("letra", "");
-				
 			} else if (esCaracter == false) {
 				frase = "El carácter utilizado no es una letra";
 				request.setAttribute("frase", frase);
 				request.setAttribute("letra", "");
-			} else {
-				frase = "La letra indicada ya ha sido utilizada de forma previa";
-				request.setAttribute("frase", frase);
-				request.setAttribute("letra", "");
-			}
+			} 
 			
-			
+						
 			//Aquí introducimos todos los setAttributes a excepción de la frase
 			request.setAttribute("palabra", palabra);
 			request.setAttribute("palabraNormalizada", palabraNormalizada);
@@ -200,7 +205,6 @@ public class SesionAhorcado extends HttpServlet {
 			String vista = "/sesionahorcado.jsp";  
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vista);
 			dispatcher.forward(request,response);
-		
 		
 		}
 		

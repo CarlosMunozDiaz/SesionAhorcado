@@ -31,17 +31,16 @@ public class LogicaAhorcado {
 		
 	}
 	
-	public static ArrayList<String> generarLista(String letra, int numeroIntentos){
-		
-		ArrayList<String> listaLetras = new ArrayList<String>();
+	public static ArrayList<String> generarLista(String letra, ArrayList<String> listaLetras){
 		
 		//Aquí no hacemos chequeo: ya se realiza en el doPost del Servlet
 		listaLetras.add(letra);
-		numeroIntentos++;
 	
 		return listaLetras;
 		
 	}
+	
+	
 	
 	public static String[] generarPalabraOculta(String palabra, String palabraNormalizada, ArrayList<String> listaLetras) {
 		
@@ -55,7 +54,7 @@ public class LogicaAhorcado {
 				
 				if(listaLetras.get(j).equals(palabraGuiones[i])) {
 					
-					palabraGuiones[i] = palabra.substring(i) + " ";				
+					palabraGuiones[i] = palabra.substring(i, i+1) + " ";				
 					
 				} else {
 					
@@ -77,7 +76,7 @@ public class LogicaAhorcado {
 		
 		for (int i = 0; i < palabraNormalizada.length(); i++) {
 			
-			if(letra.equals(palabraNormalizada.substring(i))) {
+			if(letra.equals(palabraNormalizada.substring(i,i+1))) {
 				estaLetra = true;
 				break;
 			}
@@ -85,7 +84,7 @@ public class LogicaAhorcado {
 		}
 		
 		if(estaLetra == false) {
-			numeroErrores++;
+			numeroErrores--;
 		}		
 		
 		return numeroErrores;
@@ -117,6 +116,22 @@ public class LogicaAhorcado {
 	}
 	
 	//Incluir si la letra ya ha sido utilizada
+	public static boolean letraUtilizada(String letra, ArrayList<String> listaLetras) {
+		
+		boolean encontrada = false;
+		
+		for(int i = 0; i < listaLetras.size(); i++) {
+			
+			if(letra.equals(listaLetras.get(i))) {
+				encontrada = true;
+				break;
+			}
+			
+		}
+				
+		return encontrada;
+		
+	}
 	
 	//Incluir si se ha ganado el juego
 
