@@ -46,23 +46,24 @@ public class LogicaAhorcado {
 		
 		String[] palabraGuiones = new String[palabraNormalizada.length()];
 		
-		for(int i = 0; i < palabraNormalizada.length(); i++) {
+		for(int i = 0; i < palabraGuiones.length; i++) {
 			
-			palabraGuiones[i] = palabraNormalizada.substring(i, i+1);			
+			palabraGuiones[i] = "_ ";
+			
+		}
+		
+		for(int i = 0; i < palabraNormalizada.length(); i++) {
 			
 			for(int j = 0; j < listaLetras.size(); j++) {
 				
-				if(palabraGuiones[i].equals(listaLetras.get(j)) ) {
+				if(palabraNormalizada.substring(i, i+1).equals(listaLetras.get(j))) {
 					
-					palabraGuiones[i] = palabra.charAt(i) + " ";		
+					palabraGuiones[i] = palabra.substring(i,i+1) + " ";		
 					
-				} else {
-					
-					palabraGuiones[i] = "x ";
-					
-				}
+				} 
 				
 			}
+			
 			
 		}
 		

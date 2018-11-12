@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import java.net.URLDecoder;
 
 
 /**
@@ -54,10 +54,22 @@ public class SesionAhorcado extends HttpServlet {
 			put("nombre7","Granada");
 			put("nombre8","Suances");
 			put("nombre9","España");
+			put("nombre10","Málaga");
 		}};
 		
 		//Se crea la sesión
 		HttpSession laSesion= request.getSession(true);
+		
+		if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
+			laSesion.invalidate();  // se inactiva la sesión
+			letra = "";
+			listaLetras.clear();
+			numeroIntentos = 0;
+			numeroRestantes = 6;
+			encontradaLetra = false;
+			encontradaPalabra = 1;
+						
+		}
 		
 		palabra = LogicaAhorcado.generaPalabra(mapaPalabras);
 		palabraNormalizada = LogicaAhorcado.palabraNormalizada(palabra);
@@ -67,16 +79,6 @@ public class SesionAhorcado extends HttpServlet {
 		imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 		
 		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
-		
-		if (request.getParameter("empezar") != null) {  // se ha recibido el parámetro empezar
-			letra = "";
-			listaLetras.clear();
-			numeroIntentos = 0;
-			numeroRestantes = 6;
-			encontradaLetra = false;
-			encontradaPalabra = 1;
-			laSesion.invalidate();  // se inactiva la sesión			
-		}
 				
 				/*if (laSesion.getAttribute("letra") != null) {
 					letra = (String) laSesion.getAttribute("letra");
@@ -121,10 +123,12 @@ public class SesionAhorcado extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		if (request.getCharacterEncoding() == null) {
+		    request.setCharacterEncoding("UTF-8");
+		}
 		letra = request.getParameter("caracter");
 		letra = letra.toLowerCase();
-		
+				 
 		boolean esCaracter = Character.isLetter(letra.charAt(0));
 		
 		// se recupera la sesión
@@ -144,6 +148,9 @@ public class SesionAhorcado extends HttpServlet {
 			laSesion.setAttribute("numeroIntentos", numeroIntentos);
 			laSesion.setAttribute("numeroRestantes", numeroRestantes);
 			laSesion.setAttribute("encontradaPalabra", encontradaPalabra);
+			
+			String str = "ñ";
+			System.out.println(str.length());
 									
 			if (laSesion.getAttribute("letra") != null) {
 				letra = (String) laSesion.getAttribute("letra");
@@ -151,12 +158,12 @@ public class SesionAhorcado extends HttpServlet {
 				palabra = (String) laSesion.getAttribute("palabra");
 			} else if (laSesion.getAttribute("palabraNormalizada") != null) {
 				palabraNormalizada = (String) laSesion.getAttribute("palabraNormalizada");
-			} else if (laSesion.getAttribute("palabraGuiones") != null) {
-				palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
-			} else if (laSesion.getAttribute("imagen") != null) {
-				imagen = (String) request.getAttribute("imagen");
 			} else if (laSesion.getAttribute("listaLetras") != null) {
 				listaLetras = (ArrayList<String>) request.getAttribute("listaLetras");
+			} else if (laSesion.getAttribute("imagen") != null) {
+				imagen = (String) request.getAttribute("imagen");
+			} else if (laSesion.getAttribute("palabraGuiones") != null) {
+				palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
 			} else if (laSesion.getAttribute("numeroIntentos") != null) {
 				numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
 			} else if (laSesion.getAttribute("numeroRestantes") != null) {
@@ -167,7 +174,7 @@ public class SesionAhorcado extends HttpServlet {
 				encontradaPalabra = (Integer) request.getAttribute("encontradaPalabra");
 			}
 			
-			if(letra.length() == 1 && esCaracter == true) {				
+			if(letra.length() == 1) {				
 				
 				if (encontradaLetra == true) {
 					
@@ -179,22 +186,16 @@ public class SesionAhorcado extends HttpServlet {
 					
 					listaLetras = LogicaAhorcado.generarLista(letra, listaLetras);
 					
+					palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
+					
 					numeroIntentos++;
 					
 					numeroRestantes = LogicaAhorcado.generaNumeroErrores(letra, palabraNormalizada, numeroRestantes);
 					
 					imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 										
-					palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
-					
 					encontradaPalabra = LogicaAhorcado.comprobarGuiones(palabraGuiones);
-					
-					for(int i = 0; i < palabraGuiones.length; i++)
-					{
-						System.out.print(palabraGuiones[i]);
-					}
-					System.out.println(encontradaPalabra);
-					
+										
 					frase = "";
 					request.setAttribute("frase", "");
 					request.setAttribute("letra", letra);

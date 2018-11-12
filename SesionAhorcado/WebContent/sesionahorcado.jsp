@@ -2,9 +2,12 @@
     pageEncoding="UTF-8" import="java.util.ArrayList"%>
 <%
 	String letra = (String) request.getAttribute("letra");
+
 	String imagen = (String) request.getAttribute("imagen");
+	
 	String palabra = (String) request.getAttribute("palabra");
 	String[] palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
+	
 	ArrayList<String> listaLetras = (ArrayList<String>) request.getAttribute("listaLetras");
 	
 	Integer numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
