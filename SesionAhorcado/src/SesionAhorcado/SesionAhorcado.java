@@ -79,27 +79,7 @@ public class SesionAhorcado extends HttpServlet {
 		imagen = LogicaAhorcado.generaImagen(numeroRestantes);
 		
 		palabraGuiones = LogicaAhorcado.generarPalabraOculta(palabra, palabraNormalizada, listaLetras);
-				
-				/*if (laSesion.getAttribute("letra") != null) {
-					letra = (String) laSesion.getAttribute("letra");
-				} else if (laSesion.getAttribute("palabra") != null) {
-					palabra = (String) laSesion.getAttribute("palabra");
-				} else if (laSesion.getAttribute("palabraNormalizada") != null) {
-					palabraNormalizada = (String) laSesion.getAttribute("palabraNormalizada");
-				} else if (laSesion.getAttribute("palabraGuiones") != null) {
-					palabraGuiones = (String[]) request.getAttribute("palabraGuiones");
-				} else if (laSesion.getAttribute("imagen") != null) {
-					imagen = (String) request.getAttribute("imagen");
-				} else if (laSesion.getAttribute("listaLetras") != null) {
-					listaLetras = (ArrayList<String>) request.getAttribute("listaLetras");
-				} else if (laSesion.getAttribute("numeroIntentos") != null) {
-					numeroIntentos = (Integer) request.getAttribute("numeroIntentos");
-				} else if (laSesion.getAttribute("numeroRestantes") != null) {
-					numeroRestantes = (Integer) request.getAttribute("numeroRestantes");
-				} else if (laSesion.getAttribute("frase") != null) {
-					frase = (String) request.getAttribute("frase");
-				}*/
-							
+									
 			request.setAttribute("letra", letra);
 			request.setAttribute("listaLetras", listaLetras);
 			request.setAttribute("frase", "");
@@ -148,10 +128,7 @@ public class SesionAhorcado extends HttpServlet {
 			laSesion.setAttribute("numeroIntentos", numeroIntentos);
 			laSesion.setAttribute("numeroRestantes", numeroRestantes);
 			laSesion.setAttribute("encontradaPalabra", encontradaPalabra);
-			
-			String str = "ñ";
-			System.out.println(str.length());
-									
+												
 			if (laSesion.getAttribute("letra") != null) {
 				letra = (String) laSesion.getAttribute("letra");
 			} else if (laSesion.getAttribute("palabra") != null) {
