@@ -25,6 +25,9 @@
 <link href="Estilos/estilosAhorcado.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<div id="cabecera">
+		<h1>JUEGO DEL AHORCADO</h1>
+	</div>
 	<%if (numeroRestantes == 0){ %>
 		<img src="<%=imagen%>">
 		<h3 class="rojoTitulo">¡Has perdido! Vuelve a intentarlo</h3>
@@ -32,14 +35,12 @@
 		<img src="<%=imagen%>">
 		<h3>¡Has ganado! Vuelve a intentarlo</h3>
 	<%} else {%>
-	<h1>Juego del Ahorcado</h1>
 	<h2>La letra seleccionada es: <%=letra%></h2>
 	<h3 class="rojoTitulo"><%=frase%></h3>
 	<img src="<%=imagen%>">
-	<h2>La palabra sería: <%=palabra%></h2>
 	<h2>La palabra en guiones:
 	<%for(int i = 0; i < palabraGuiones.length; i++){ %>
-		<%=palabraGuiones[i] %>
+		<span><%=palabraGuiones[i]%></span>
 	<%} %>
 	</h2>
 	<form action="SesionAhorcado" method="post">

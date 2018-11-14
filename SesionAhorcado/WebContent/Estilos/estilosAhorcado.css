@@ -2,19 +2,55 @@
 
 * {
 	text-align: center;
+	margin: 0 auto;
+}
+
+#cabecera{
+	
+	height: auto;
+	margin-bottom: 20px;
+	background: rgb(158,203,45); /* Old browsers */
+	background: -moz-linear-gradient(-45deg, rgba(158,203,45,1) 0%, rgba(114,170,0,1) 22%, rgba(114,170,0,1) 55%, rgba(114,170,0,1) 55%, rgba(142,185,42,1) 80%, rgba(191,210,85,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(-45deg, rgba(158,203,45,1) 0%,rgba(114,170,0,1) 22%,rgba(114,170,0,1) 55%,rgba(114,170,0,1) 55%,rgba(142,185,42,1) 80%,rgba(191,210,85,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(135deg, rgba(158,203,45,1) 0%,rgba(114,170,0,1) 22%,rgba(114,170,0,1) 55%,rgba(114,170,0,1) 55%,rgba(142,185,42,1) 80%,rgba(191,210,85,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9ecb2d', endColorstr='#bfd255',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	
+}
+
+#cabecera h1 {
+	
+	font-size: 2.5em;
+	text-shadow: 3px 3px grey;
+	padding: 40px;
+	
 }
 
 .rojoTitulo {
 	color: red;
 }
 
+span {
+	
+	/*border: 2px solid #c0c0c0;*/
+	padding: 5px;
+	margin: 15px;
+	
+}
+
+form {
+	
+	margin: 20px;
+	
+}
+
 #informacion {
 	
 	border: 2px solid black;
 	border-radius: 15px;
-	background-color: green;
+	background-color: lightgrey;
 	width: 50%;
 	margin: 20px auto;
+	padding: 10px;
 	
 }
 
