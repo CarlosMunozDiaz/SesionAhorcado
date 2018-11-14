@@ -57,6 +57,8 @@ public class SesionAhorcado extends HttpServlet {
 			put("nombre10","Málaga");
 		}};
 		
+		try {
+			
 		//Se crea la sesión
 		HttpSession laSesion= request.getSession(true);
 		
@@ -96,6 +98,12 @@ public class SesionAhorcado extends HttpServlet {
 			String vista = "/sesionahorcado.jsp";  
 			RequestDispatcher view = request.getRequestDispatcher(vista);
 			view.forward(request, response);
+		
+		//Capturar la excepción de forma apropiada (como vimos hace dos semanas)
+		} catch (Exception e) {
+			//out.println("Se produce una excepción <br />");
+            //out.println(e.getMessage());
+		}
 				
 		}
 			
@@ -110,6 +118,8 @@ public class SesionAhorcado extends HttpServlet {
 		letra = letra.toLowerCase();
 				 
 		boolean esCaracter = Character.isLetter(letra.charAt(0));
+		
+		try {
 		
 		// se recupera la sesión
 		HttpSession laSesion= request.getSession(false);  //carga la sessión si existe, devuelve null si no
@@ -206,7 +216,13 @@ public class SesionAhorcado extends HttpServlet {
 			String vista = "/sesionahorcado.jsp";  
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(vista);
 			dispatcher.forward(request,response);
-		
+			
+		 
+		}
+		//Capturar la excepción de forma apropiada (como vimos hace dos semanas)
+		} catch (Exception e) {
+			//out.println("Se produce una excepción <br />");
+            //out.println(e.getMessage());
 		}
 		
 	}
