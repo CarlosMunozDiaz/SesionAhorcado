@@ -22,10 +22,10 @@ public class LogicaAhorcado {
 		
 		String palabraNormalizada = palabra.toLowerCase();
 		
-		palabraNormalizada = palabraNormalizada.replace('ñ', '\001');
+		palabraNormalizada = palabraNormalizada.replace('Ã±', '\001');
 		palabraNormalizada = Normalizer.normalize(palabraNormalizada, Normalizer.Form.NFD);
 		palabraNormalizada = palabraNormalizada.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-		palabraNormalizada = palabraNormalizada.replace('\001', 'ñ');
+		palabraNormalizada = palabraNormalizada.replace('\001', 'Ã±');
 	 		
 		return palabraNormalizada;
 		
@@ -33,7 +33,7 @@ public class LogicaAhorcado {
 	
 	public static ArrayList<String> generarLista(String letra, ArrayList<String> listaLetras){
 		
-		//Aquí no hacemos chequeo: ya se realiza en el doPost del Servlet
+		//AquÃ­ no hacemos chequeo: ya se realiza en el doPost del Servlet
 		listaLetras.add(letra);
 	
 		return listaLetras;
@@ -148,7 +148,5 @@ public class LogicaAhorcado {
 		return encontrada;
 		
 	}
-	
-	//Incluir si se ha ganado el juego
 
 }
